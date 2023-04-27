@@ -14,4 +14,8 @@
     output.txt, donde el mismo captura la salida del programa, y este archivo README.md
     que actua como Front Page de la resolucion del trabajo</li>
     </ul>
+    <br>
+<li><b>Editor de Codigo Fuente:</b> Visual Studio Code</li>
+<li><b>Compilador:</b> MSYS2</li>
+<li><b>Lenguaje utilizado:</b> C++</li>    
 </ul>
