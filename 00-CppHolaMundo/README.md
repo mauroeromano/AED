@@ -16,6 +16,7 @@
     </ul>
     <br>
 <li><b>Editor de Codigo Fuente:</b> Visual Studio Code</li>
-<li><b>Compilador:</b> MSYS2</li>
-<li><b>Lenguaje utilizado:</b> C++</li>    
+<li><b>Entorno de Desarrollo:</b> MSYS2</li>
+<li><b>Compilador:</b> g++ <i>Version: 12.2.0</i></li>
+<li><b>Lenguaje utilizado:</b> C++</li>   
 </ul>
