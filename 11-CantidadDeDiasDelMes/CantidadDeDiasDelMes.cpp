@@ -10,7 +10,7 @@ int main() {
 
     unsigned n;
     cout << "Ingrese un anio: "; cin >> n;
-    cout << "Para el anio "<<n<<", febrero tiene "<<GetCantidadDeDias(n)<<" dias.\n";
+    cout << "Para el anio " << n << ", febrero tiene " << GetCantidadDeDias(n) << " dias.\n";
 
     // Prueba para años bisiestos
 
