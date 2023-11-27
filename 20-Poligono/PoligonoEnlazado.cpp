@@ -12,12 +12,13 @@ struct Punto{
 };
 
 struct Nodo{
-    Punto val;
+    Punto value;
     Nodo* next{nullptr};
 };
 
 struct Poligono{
-    Nodo* primero{nullptr};
+    Nodo* primerNodo{nullptr};
+    unsigned n{};
 };
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -43,118 +44,58 @@ double GetPerimetro(const Poligono&);
 // Cantidad de Lados
 unsigned GetCantidadDeLados(const Poligono&);
 
-// Agregar punto al final de poliogono
+// Push
 Poligono& Push(Poligono&, const Punto);
 
-// Agregar punto por posicion
-Poligono& Add(Poligono&, const Punto&, unsigned);
+// Pop
+Poligono& Pop(Poligono&);
 
-// Eliminar ultimo punto del poligono
-Poligono& Pop (Poligono&);
-
-// Remover punto dado
-Poligono& RemovePorPunto(Poligono&, const Punto);
-
-// Remueve un punto dada una posicion
-Poligono& RemovePorPosicion(Poligono&, unsigned);
-
-// Muestra el ultimo punto
-Punto Top(const Poligono&);
-
-// Muestra el primer punto
-Punto First(const Poligono&);
-
-// Muestra el punto que hay en esa posicion
-Punto GetPuntoPorPosicion(const Poligono&, unsigned);
-
-// Muestra la posicion donde se encuentra ese punto
-int GetPosicionPorPunto(const Poligono&, const Punto&);
-
-// Indica si un punto esta o no dentro del poligono (ray casting)
-bool PuntoDentroDePoligono(const Punto&, const Poligono&);
-
-
-int main(){
+int main() {
 
     // Poligono 1 de prueba
 
-    Poligono p{{{{0, 0}, {3, 0}, {0, 1.5}}},3};
+    Poligono p;
 
-    Poligono p->next;
+    p.primerNodo = new Nodo;
+    p.primerNodo->value = {0,0};
+    p.primerNodo->next = new Nodo;
+    p.primerNodo->next->value = {3, 0};
+    p.primerNodo->next->next = new Nodo;
+    p.primerNodo->next->next->value = {0, 1.5};
+    p.n = 3;
 
-    assert(AreNear(GetPerimetro(p),7.854));
+    assert(AreNear(GetPerimetro(p), 7.854));
     assert(GetCantidadDeLados(p) == 3);
-    assert(Top(p).x == 0 and Top(p).y == 1.5);
-    assert(First(p).x == 0 and First(p).y == 0);
 
-    Pop(p);
-    assert(AreNear(GetPerimetro(p),6));
-    assert(GetCantidadDeLados(p) == 2);
-    assert(Top(p).x == 3 and Top(p).y == 0);
-
-    Push(p, {0, 1.5});
-    assert(AreNear(GetPerimetro(p),7.854));
-    assert(GetCantidadDeLados(p) == 3);
-    assert(Top(p).x == 0 and Top(p).y == 1.5);
-
-    assert(GetPuntoPorPosicion(p,2).x == 3 and GetPuntoPorPosicion(p,2).y == 0);
-    RemovePorPunto(p,{3,0});
-    assert(GetPuntoPorPosicion(p,2).x == 0 and GetPuntoPorPosicion(p,2).y == 1.5);
-
-    assert(GetCantidadDeLados(p) == 2);
-    Add(p,{1,5},4);
-    Add(p,{1,1},3);
-    assert(GetCantidadDeLados(p) == 4);
-
-    assert(GetPuntoPorPosicion(p,1).x == 0 and GetPuntoPorPosicion(p,1).y == 0);
-    assert(GetPuntoPorPosicion(p,2).x == 0 and GetPuntoPorPosicion(p,2).y == 1.5);
-    assert(GetPuntoPorPosicion(p,3).x == 1 and GetPuntoPorPosicion(p,3).y == 1);
-
-    assert(GetPosicionPorPunto(p,{0,0  }) == 1);
-    assert(GetPosicionPorPunto(p,{0,1.5}) == 2);
-    assert(GetPosicionPorPunto(p,{1,1  }) == 3);
-    assert(GetPosicionPorPunto(p,{1,5  }) == 4);
-
+    Push(p,{})
 
     // Poligono 2 de prueba
 
-    Poligono p2{{{{0, 0}, {4, 0}, {4, 2},{0,2}}},4};
+    Poligono p2;
 
-    assert(AreNear(GetPerimetro(p2),12));
+    p2.primerNodo = new Nodo{0, 0};
+    p2.primerNodo->next = new Nodo{4, 0};
+    p2.primerNodo->next->next = new Nodo{4, 2};
+    p2.primerNodo->next->next->next = new Nodo{0, 2};
+    p2.n = 4;
+
+    assert(AreNear(GetPerimetro(p2), 12));
     assert(GetCantidadDeLados(p2) == 4);
-    assert(Top(p2).x == 0 and Top(p2).y == 2);
-    assert(First(p2).x == 0 and First(p2).y == 0);
-
-    Pop(p2);
-    assert(AreNear(GetPerimetro(p2),10.47));
-    assert(GetCantidadDeLados(p2) == 3);
-    assert(Top(p2).x == 4 and Top(p2).y == 2);
-
-    Push(p2,{0,2});
-    assert(AreNear(GetPerimetro(p2),12));
-    assert(GetCantidadDeLados(p2) == 4);
-    assert(Top(p2).x == 0 and Top(p2).y == 2);
-
-    assert(GetPuntoPorPosicion(p2,2).x == 4 and GetPuntoPorPosicion(p2,2).y == 0);
-    RemovePorPosicion(p2,2);
-    assert(GetPuntoPorPosicion(p2,2).x == 4 and GetPuntoPorPosicion(p2,2).y == 2);
-
 }
-
 
 // Funciones Adicionales
 
-double Abs(double x){
-    return (x>0) ? x : -x;
-}
+    double Abs(double x){
+        return (x>0) ? x : -x;
+    }
 
-bool AreNear(const double& a, const double& b, const double tolerance){
-    return Abs(a-b) < tolerance;
-}
+    bool AreNear(const double& a, const double& b, const double tolerance){
+        return Abs(a-b) < tolerance;
+    }
 
-double GetDistancia(const Punto& p1, const Punto& p2){
-    return (std::sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2)));
-}
+    double GetDistancia(const Punto& p1, const Punto& p2){
+        return (std::sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2)));
+    }
 
 /*-----------------------------------------------------------------------------------------------*/
 
@@ -163,104 +104,51 @@ double GetDistancia(const Punto& p1, const Punto& p2){
 // Perimetro
 
 double GetPerimetro(const Poligono& p){
+    double perimetro {};
 
+    if(p.primerNodo != nullptr){
+        auto actual {p.primerNodo};
+
+        for(; actual->next; actual = actual->next)
+            perimetro += GetDistancia(actual->value,actual->next->value);
+
+        perimetro += GetDistancia(actual->value,p.primerNodo->value);
+
+        return perimetro;
+    }
 }
-
-/*-----------------------------------------------------------------------------------------------*/
 
 // Cantidad de Lados
 
 unsigned GetCantidadDeLados(const Poligono& p){
-
+    return p.n;
 }
-
-/*-----------------------------------------------------------------------------------------------*/
 
 // Agregar punto al final del poligono
 
 Poligono& Push(Poligono& p, const Punto nuevoPunto){
 
+    Nodo* nuevoNodo = new Nodo{nuevoPunto};
+
+    if(p.primerNodo == nullptr){
+        p.primerNodo = nuevoNodo;
+    }
+    else{
+        Nodo* ultimoNodo = p.primerNodo;
+        for(;ultimoNodo->next != nullptr;ultimoNodo = ultimoNodo -> next){
+        }
+        ultimoNodo->next = nuevoNodo;
+    }
+    ++p.n;
+    return p;
 }
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Agregar punto por posicion
-
-Poligono& Add(Poligono& p, const Punto& punto, unsigned pos) {
-
-}
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Eliminar ultimo punto del poligono
 
 Poligono& Pop(Poligono& p){
 
-}
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Remover punto dado
-
-Poligono& RemovePorPunto(Poligono& p, const Punto puntoToRemove){
-
-}
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Remueve un punto dada una posicion
-
-Poligono& RemovePorPosicion(Poligono& p, unsigned pos) {
-
-}
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Muestra el ultimo punto
-
-Punto Top(const Poligono& p){
-
-}
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Muestra el primer punto
-
-Punto First(const Poligono& p){
-
-}
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Muestra el punto que hay en esa posicion
-
-Punto GetPuntoPorPosicion (const Poligono& p, unsigned pos){
-
-}
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Muestra la posicion donde se encuentra ese punto
-
-int GetPosicionPorPunto(const Poligono& p, const Punto& punto){
-
-
-/*-----------------------------------------------------------------------------------------------*/
-
-
-
-/*
-// Funciones
-
-Punto Pop(Poligono& p1){
-    Nodo* p{p1.primero};
-    for (; p ; p = p->next) {
+    if(p.primerNodo == nullptr){
+        return p;
+    }
+    else{
 
     }
-    Punto puntoSacado{p->next->val};
-    delete p->next;
-    p->next = nullptr;
-
-    return puntoSacado;
 }
-*/
