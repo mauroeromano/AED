@@ -40,19 +40,19 @@ double GetPerimetro(const Poligono&);
 unsigned GetCantidadDeLados(const Poligono&);
 
 // Agregar punto al final de poliogono
-Poligono& Push(Poligono&, const Punto);
+void Push(Poligono&, const Punto);
 
 // Agregar punto por posicion
-Poligono& Add(Poligono&, const Punto&, unsigned);
+void Add(Poligono&, const Punto&, unsigned);
 
 // Eliminar ultimo punto del poligono
-Poligono& Pop (Poligono&);
+void Pop (Poligono&);
 
 // Remover punto dado
-Poligono& RemovePorPunto(Poligono&, const Punto);
+void RemovePorPunto(Poligono&, const Punto);
 
 // Remueve un punto dada una posicion
-Poligono& RemovePorPosicion(Poligono&, unsigned);
+void RemovePorPosicion(Poligono&, unsigned);
 
 // Muestra el ultimo punto
 Punto Top(const Poligono&);
@@ -179,73 +179,65 @@ unsigned GetCantidadDeLados(const Poligono& p){
 
 // Agregar punto al final del poligono
 
-Poligono& Push(Poligono& p, const Punto nuevoPunto){
+void Push(Poligono& p, const Punto nuevoPunto){
     if(p.n < p.puntos.size()){
         p.puntos.at(p.n) = nuevoPunto;
         p.n++;
     }
-    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
 // Agregar punto por posicion
 
-Poligono& Add(Poligono& p, const Punto& punto, unsigned pos) {
+void Add(Poligono& p, const Punto& punto, unsigned pos) {
     if (p.n < p.puntos.size()) {
         for (unsigned i=p.n; i > pos; i--) {
             p.puntos.at(i) = p.puntos.at(i-1);
         }
         p.puntos.at(pos-1) = punto;
         p.n++;
-        return p;
     }
-    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
 // Eliminar ultimo punto del poligono
 
-Poligono& Pop(Poligono& p){
+void Pop(Poligono& p){
     if(p.n > 0){
         p.n--;
     }
-    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
 // Remover punto dado
 
-Poligono& RemovePorPunto(Poligono& p, const Punto puntoToRemove){
+void RemovePorPunto(Poligono& p, const Punto puntoToRemove){
     for(unsigned i{}; i<p.n; i++){
         if(p.puntos.at(i).x == puntoToRemove.x and p.puntos.at(i).y == puntoToRemove.y){
             for(unsigned j=i; j<p.n; j++){
                 p.puntos.at(j) = p.puntos.at(j+1);
             }
             p.n--;
-            return p;
         }
     }
-    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
 // Remueve un punto dada una posicion
 
-Poligono& RemovePorPosicion(Poligono& p, unsigned pos) {
+void RemovePorPosicion(Poligono& p, unsigned pos) {
     for (unsigned i{}; i < p.n; i++) {
         if (i == pos-1) {
             for (unsigned j = i; j < p.n; j++) {
                 p.puntos.at(j) = p.puntos.at(j + 1);
             }
             p.n--;
-            return p;
         }
     }
-    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
