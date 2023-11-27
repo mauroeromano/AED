@@ -1,7 +1,15 @@
-// Tipos de Datos
+// Poligono Contiguo | Enlazado
+
+// Tipos de Datos (Contiguo)
 
 Punto {x,y e R}
 Poligono {puntos e array, n e N}
+
+// Tipos de Datos (Enlazado)
+
+Punto {x,y e R}
+Nodo {val e Punto, next e Nodo*}
+Poligono{primero e Nodo*}
 
 /*-----------------------------------------------------------------------------------------------*/
 
