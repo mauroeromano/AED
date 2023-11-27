@@ -2,7 +2,7 @@
 
 // Tipos de Datos (Contiguo)
 
-Punto {x,y e R}
+Punto {x,y e R} <br>
 Poligono {puntos e array, n e N}
 
 // Tipos de Datos (Enlazado)
