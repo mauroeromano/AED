@@ -1,33 +1,14 @@
 #include<array>
-#include<math.h>
 #include<cassert>
+#include"FuncionesAdicionales.h"
 using std::array;
 
 /*-----------------------------------------------------------------------------------------------*/
-
-// Tipos de Datos
-
-struct Punto{
-    double x,y;
-};
 
 struct Poligono{
     array<Punto,100> puntos;
     unsigned n{};
 };
-
-/*-----------------------------------------------------------------------------------------------*/
-
-// Funciones Adicionales
-
-// Distancia entre dos puntos
-double GetDistancia(const Punto&, const Punto&);
-
-// Devuelve el valor absoluto (modulo)
-double Abs(double);
-
-// Dado dos valores, redondea con una tolerancia de 0.01 (defecto)
-bool AreNear(const double&, const double&, const double = 0.01);
 
 /*-----------------------------------------------------------------------------------------------*/
 
@@ -40,19 +21,19 @@ double GetPerimetro(const Poligono&);
 unsigned GetCantidadDeLados(const Poligono&);
 
 // Agregar punto al final de poliogono
-void Push(Poligono&, const Punto);
+Poligono& Push(Poligono&, const Punto);
 
 // Agregar punto por posicion
-void Add(Poligono&, const Punto&, unsigned);
+Poligono& Add(Poligono&, const Punto&, unsigned);
 
 // Eliminar ultimo punto del poligono
-void Pop (Poligono&);
+Poligono& Pop (Poligono&);
 
 // Remover punto dado
-void RemovePorPunto(Poligono&, const Punto);
+Poligono& RemovePorPunto(Poligono&, const Punto);
 
 // Remueve un punto dada una posicion
-void RemovePorPosicion(Poligono&, unsigned);
+Poligono& RemovePorPosicion(Poligono&, unsigned);
 
 // Muestra el ultimo punto
 Punto Top(const Poligono&);
@@ -60,11 +41,11 @@ Punto Top(const Poligono&);
 // Muestra el primer punto
 Punto First(const Poligono&);
 
-// Muestra el punto que hay en esa posicion (get)
+// Muestra el punto que hay en esa posicion
 Punto GetPuntoPorPosicion(const Poligono&, unsigned);
 
-// Muestra la posicion donde se encuentra ese punto (index)
-unsigned GetPosicionPorPunto(const Poligono&, const Punto&);
+// Muestra la posicion donde se encuentra ese punto
+int GetPosicionPorPunto(const Poligono&, const Punto&);
 
 int main(){
 
@@ -108,12 +89,7 @@ int main(){
 
     // Poligono 2 de prueba
 
-    Poligono p2;
-
-    Push(p2,{0,0});
-    Push(p2,{4,0});
-    Push(p2,{4,2});
-    Push(p2,{0,2});
+    Poligono p2{{{{0, 0}, {4, 0}, {4, 2},{0,2}}},4};
 
     assert(AreNear(GetPerimetro(p2),12));
     assert(GetCantidadDeLados(p2) == 4);
@@ -133,27 +109,10 @@ int main(){
     assert(GetPuntoPorPosicion(p2,2).x == 4 and GetPuntoPorPosicion(p2,2).y == 0);
     RemovePorPosicion(p2,2);
     assert(GetPuntoPorPosicion(p2,2).x == 4 and GetPuntoPorPosicion(p2,2).y == 2);
+
 }
-
-// Funciones Adicionales
-
-double Abs(double x){
-    return (x>0) ? x : -x;
-}
-
-bool AreNear(const double& a, const double& b, const double tolerance){
-    return Abs(a-b) < tolerance;
-}
-
-double GetDistancia(const Punto& p1, const Punto& p2){
-    return (std::sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2)));
-}
-
-/*-----------------------------------------------------------------------------------------------*/
 
 // Funciones p/Poligono
-
-// Perimetro
 
 double GetPerimetro(const Poligono& p){
     double perimetro {};
@@ -168,80 +127,74 @@ double GetPerimetro(const Poligono& p){
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Cantidad de Lados
-
 unsigned GetCantidadDeLados(const Poligono& p){
     return p.n;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Agregar punto al final del poligono
-
-void Push(Poligono& p, const Punto nuevoPunto){
+Poligono& Push(Poligono& p, const Punto nuevoPunto){
     if(p.n < p.puntos.size()){
         p.puntos.at(p.n) = nuevoPunto;
         p.n++;
     }
+    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Agregar punto por posicion
-
-void Add(Poligono& p, const Punto& punto, unsigned pos) {
+Poligono& Add(Poligono& p, const Punto& punto, unsigned pos) {
     if (p.n < p.puntos.size()) {
         for (unsigned i=p.n; i > pos; i--) {
             p.puntos.at(i) = p.puntos.at(i-1);
         }
         p.puntos.at(pos-1) = punto;
         p.n++;
+        return p;
     }
+    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Eliminar ultimo punto del poligono
-
-void Pop(Poligono& p){
+Poligono& Pop(Poligono& p){
     if(p.n > 0){
         p.n--;
     }
+    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Remover punto dado
-
-void RemovePorPunto(Poligono& p, const Punto puntoToRemove){
+Poligono& RemovePorPunto(Poligono& p, const Punto puntoToRemove){
     for(unsigned i{}; i<p.n; i++){
-        if(p.puntos.at(i).x == puntoToRemove.x and p.puntos.at(i).y == puntoToRemove.y){
+        if(AreEqual(p.puntos.at(i),puntoToRemove)){
             for(unsigned j=i; j<p.n; j++){
                 p.puntos.at(j) = p.puntos.at(j+1);
             }
             p.n--;
+            return p;
         }
     }
+    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Remueve un punto dada una posicion
-
-void RemovePorPosicion(Poligono& p, unsigned pos) {
+Poligono& RemovePorPosicion(Poligono& p, unsigned pos) {
     for (unsigned i{}; i < p.n; i++) {
         if (i == pos-1) {
             for (unsigned j = i; j < p.n; j++) {
                 p.puntos.at(j) = p.puntos.at(j + 1);
             }
             p.n--;
+            return p;
         }
     }
+    return p;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
-
-// Muestra el ultimo punto
 
 Punto Top(const Poligono& p){
     return p.puntos.at(p.n-1);
@@ -249,15 +202,11 @@ Punto Top(const Poligono& p){
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Muestra el primer punto
-
 Punto First(const Poligono& p){
     return p.puntos.at(0);
 }
 
 /*-----------------------------------------------------------------------------------------------*/
-
-// Muestra el punto que hay en esa posicion
 
 Punto GetPuntoPorPosicion (const Poligono& p, unsigned pos){
     return p.puntos.at(pos-1);
@@ -265,15 +214,13 @@ Punto GetPuntoPorPosicion (const Poligono& p, unsigned pos){
 
 /*-----------------------------------------------------------------------------------------------*/
 
-// Muestra la posicion donde se encuentra ese punto
-
-unsigned GetPosicionPorPunto(const Poligono& p, const Punto& punto){
+int GetPosicionPorPunto(const Poligono& p, const Punto& punto){
     for(unsigned i{}; i<p.n; i++){
-        if(p.puntos.at(i).x == punto.x and p.puntos.at(i).y == punto.y){
+        if(AreEqual(p.puntos.at(i),punto)){
             return i+1;
         }
     }
-    return 0;
+    return -1;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
