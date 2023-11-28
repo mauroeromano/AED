@@ -117,15 +117,10 @@ Poligono& RemovePorPunto(Poligono& p, const Punto puntoToRemove){
 /*-----------------------------------------------------------------------------------------------*/
 
 Poligono& RemovePorPosicion(Poligono& p, unsigned pos) {
-    for (unsigned i{}; i < p.n; i++) {
-        if (i == pos-1) {
-            for (unsigned j = i; j < p.n; j++) {
-                p.puntos.at(j) = p.puntos.at(j + 1);
-            }
-            p.n--;
-            return p;
-        }
+    for (unsigned i = pos-1; i < p.n - 1; i++) {
+        p.puntos.at(i) = p.puntos.at(i + 1);
     }
+    p.n--;
     return p;
 }
 
