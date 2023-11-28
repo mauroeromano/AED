@@ -1,6 +1,7 @@
 #include<array>
-#include<math.h>
 #include<cassert>
+#include"Punto.h"
+#include"FuncionesAuxiliares.h"
 using std::array;
 
 /*-----------------------------------------------------------------------------------------------*/
