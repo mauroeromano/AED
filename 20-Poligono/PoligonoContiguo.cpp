@@ -60,11 +60,11 @@ Punto Top(const Poligono&);
 // Muestra el primer punto
 Punto First(const Poligono&);
 
-// Muestra el punto que hay en esa posicion
+// Muestra el punto que hay en esa posicion (get)
 Punto GetPuntoPorPosicion(const Poligono&, unsigned);
 
-// Muestra la posicion donde se encuentra ese punto
-int GetPosicionPorPunto(const Poligono&, const Punto&);
+// Muestra la posicion donde se encuentra ese punto (index)
+unsigned GetPosicionPorPunto(const Poligono&, const Punto&);
 
 // Indica si un punto esta o no dentro del poligono (ray casting)
 bool PuntoDentroDePoligono(const Punto&, const Poligono&);
@@ -268,13 +268,13 @@ Punto GetPuntoPorPosicion (const Poligono& p, unsigned pos){
 
 // Muestra la posicion donde se encuentra ese punto
 
-int GetPosicionPorPunto(const Poligono& p, const Punto& punto){
+unsigned GetPosicionPorPunto(const Poligono& p, const Punto& punto){
     for(unsigned i{}; i<p.n; i++){
         if(p.puntos.at(i).x == punto.x and p.puntos.at(i).y == punto.y){
             return i+1;
         }
     }
-    return -1;
+    return 0;
 }
 
 /*-----------------------------------------------------------------------------------------------*/
