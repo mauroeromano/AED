@@ -66,10 +66,6 @@ Punto GetPuntoPorPosicion(const Poligono&, unsigned);
 // Muestra la posicion donde se encuentra ese punto (index)
 unsigned GetPosicionPorPunto(const Poligono&, const Punto&);
 
-// Indica si un punto esta o no dentro del poligono (ray casting)
-bool PuntoDentroDePoligono(const Punto&, const Poligono&);
-
-
 int main(){
 
     // Poligono 1 de prueba
@@ -112,7 +108,12 @@ int main(){
 
     // Poligono 2 de prueba
 
-    Poligono p2{{{{0, 0}, {4, 0}, {4, 2},{0,2}}},4};
+    Poligono p2;
+
+    Push(p2,{0,0});
+    Push(p2,{4,0});
+    Push(p2,{4,2});
+    Push(p2,{0,2});
 
     assert(AreNear(GetPerimetro(p2),12));
     assert(GetCantidadDeLados(p2) == 4);
@@ -132,9 +133,7 @@ int main(){
     assert(GetPuntoPorPosicion(p2,2).x == 4 and GetPuntoPorPosicion(p2,2).y == 0);
     RemovePorPosicion(p2,2);
     assert(GetPuntoPorPosicion(p2,2).x == 4 and GetPuntoPorPosicion(p2,2).y == 2);
-
 }
-
 
 // Funciones Adicionales
 
