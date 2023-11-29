@@ -52,10 +52,7 @@ int main(){
 
     Poligono p2;
 
-    Push(p2,{0,0});
-    Push(p2,{4,0});
-    Push(p2,{4,2});
-    Push(p2,{0,2});
+    Push(Push(Push(Push(p2,{0,0}),{4,0}),{4,2}),{0,2});
 
     assert(AreNear(GetPerimetro(p2),12));
     assert(GetCantidadDeLados(p2) == 4);
