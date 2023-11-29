@@ -21,6 +21,7 @@ unsigned GetCantidadDeLados(const Poligono&);
 
 // Agregar punto al final de poliogono
 Poligono& Push(Poligono&, const Punto);
+// void Push(Poligono&, const Punto);
 
 // Agregar punto por posicion
 Poligono& Add(Poligono&, const Punto&, unsigned);
