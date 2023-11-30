@@ -35,8 +35,9 @@ int main(){
     assert(GetPuntoPorPosicion(p,2).x == 0 and GetPuntoPorPosicion(p,2).y == 1.5);
 
     assert(GetCantidadDeLados(p) == 2);
-    Add(p,{1,5},4);
     Add(p,{1,1},3);
+    Add(p,{1,5},4);
+
     assert(GetCantidadDeLados(p) == 4);
 
     assert(GetPuntoPorPosicion(p,1).x == 0 and GetPuntoPorPosicion(p,1).y == 0);
@@ -47,6 +48,10 @@ int main(){
     assert(GetPosicionPorPunto(p,{0,1.5}) == 2);
     assert(GetPosicionPorPunto(p,{1,1  }) == 3);
     assert(GetPosicionPorPunto(p,{1,5  }) == 4);
+
+    RemovePorPosicion(p,1);
+    assert(GetCantidadDeLados(p) == 3);
+    assert(GetPuntoPorPosicion(p,1).x == 0 and GetPuntoPorPosicion(p,1).y == 1.5);
 
     // Poligono 2 de prueba
 
